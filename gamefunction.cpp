@@ -1,18 +1,33 @@
 #include "gamefunction.h"
 using namespace std;
 /***********************Card**********************/
-Card::Card(){
+Card::Card(rank r, suit s, bool ifu)
+    : m_Rank(r), m_Suit(s), m_IsFaceUp(ifu)
+{
 
 }
+
 
 Card::~Card(){}
 
 int Card::GetValue(){
-    return m_Rank;
+    //если карта перевернута лицом вниз, ее значение равно О
+    int value = 0;
+    if (m_IsFaceUp)
+    {
+        // значение - это число, указанное на карте
+        value = m_Rank;
+        // значение равно 10 для JACK, QUEEN и KING
+        if (value > 10)
+        {
+            value = 10;
+        }
+    }
+    return value;
 }
 
 void Card::Flip(){
-    m_IsFaceUp = ~m_IsFaceUp;
+    m_IsFaceUp = !(m_IsFaceUp);
 }
 /***********************Hand*********************/
 Hand::Hand(){
